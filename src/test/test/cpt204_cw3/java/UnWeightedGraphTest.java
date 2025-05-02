@@ -1,5 +1,7 @@
-package cpt204_cw3;
+package cpt204_cw3.java;
 
+import cpt204_cw3.java.Edge;
+import cpt204_cw3.java.UnWeightedGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

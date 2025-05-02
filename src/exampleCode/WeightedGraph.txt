@@ -2,24 +2,24 @@ package org.example;
 
 import java.util.*;
 
-public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
+public class cpt204_cw3.java.WeightedGraph<V> extends cpt204_cw3.java.UnWeightedGraph<V> {
     /**
      * Construct an empty
      */
-    public cpt204_cw3.WeightedGraph() {
+    public cpt204_cw3.java.WeightedGraph() {
     }
 
     /**
-     * Construct a cpt204_cw3.WeightedGraph from vertices and edged in arrays
+     * Construct a cpt204_cw3.java.WeightedGraph from vertices and edged in arrays
      */
-    public cpt204_cw3.WeightedGraph(V[] vertices, int[][] edges) {
+    public cpt204_cw3.java.WeightedGraph(V[] vertices, int[][] edges) {
         createWeightedGraph(java.util.Arrays.asList(vertices), edges);
     }
 
     /**
-     * Construct a cpt204_cw3.WeightedGraph from vertices and edges in list
+     * Construct a cpt204_cw3.java.WeightedGraph from vertices and edges in list
      */
-    public cpt204_cw3.WeightedGraph(int[][] edges, int numberOfVertices) {
+    public cpt204_cw3.java.WeightedGraph(int[][] edges, int numberOfVertices) {
         List<V> vertices = new ArrayList<>();
         for (int i = 0; i < numberOfVertices; i++)
             vertices.add((V) (new Integer(i)));
@@ -28,16 +28,16 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
     }
 
     /**
-     * Construct a cpt204_cw3.WeightedGraph for vertices 0, 1, 2 and edge list
+     * Construct a cpt204_cw3.java.WeightedGraph for vertices 0, 1, 2 and edge list
      */
-    public cpt204_cw3.WeightedGraph(List<V> vertices, List<cpt204_cw3.WeightedEdge> edges) {
+    public cpt204_cw3.java.WeightedGraph(List<V> vertices, List<cpt204_cw3.java.WeightedEdge> edges) {
         createWeightedGraph(vertices, edges);
     }
 
     /**
-     * Construct a cpt204_cw3.WeightedGraph from vertices 0, 1, and edge array
+     * Construct a cpt204_cw3.java.WeightedGraph from vertices 0, 1, and edge array
      */
-    public cpt204_cw3.WeightedGraph(List<cpt204_cw3.WeightedEdge> edges,
+    public cpt204_cw3.java.WeightedGraph(List<cpt204_cw3.java.WeightedEdge> edges,
                          int numberOfVertices) {
         List<V> vertices = new ArrayList<>();
         for (int i = 0; i < numberOfVertices; i++)
@@ -53,12 +53,12 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
         this.vertices = vertices;
 
         for (int i = 0; i < vertices.size(); i++) {
-            neighbors.add(new ArrayList<cpt204_cw3.Edge>()); // Create a list for vertices
+            neighbors.add(new ArrayList<cpt204_cw3.java.Edge>()); // Create a list for vertices
         }
 
         for (int i = 0; i < edges.length; i++) {
             neighbors.get(edges[i][0]).add(
-                    new cpt204_cw3.WeightedEdge(edges[i][0], edges[i][1], edges[i][2]));
+                    new cpt204_cw3.java.WeightedEdge(edges[i][0], edges[i][1], edges[i][2]));
         }
     }
 
@@ -66,14 +66,14 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
      * Create adjacency lists from edge lists
      */
     private void createWeightedGraph(
-            List<V> vertices, List<cpt204_cw3.WeightedEdge> edges) {
+            List<V> vertices, List<cpt204_cw3.java.WeightedEdge> edges) {
         this.vertices = vertices;
 
         for (int i = 0; i < vertices.size(); i++) {
-            neighbors.add(new ArrayList<cpt204_cw3.Edge>()); // Create a list for vertices
+            neighbors.add(new ArrayList<cpt204_cw3.java.Edge>()); // Create a list for vertices
         }
 
-        for (cpt204_cw3.WeightedEdge edge : edges) {
+        for (cpt204_cw3.java.WeightedEdge edge : edges) {
             neighbors.get(edge.u).add(edge); // Add an edge into the list
         }
     }
@@ -82,13 +82,13 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
      * Return the weight on the edge (u, v)
      */
     public double getWeight(int u, int v) throws Exception {
-        for (cpt204_cw3.Edge edge : neighbors.get(u)) {
+        for (cpt204_cw3.java.Edge edge : neighbors.get(u)) {
             if (edge.v == v) {
-                return ((cpt204_cw3.WeightedEdge) edge).weight;
+                return ((cpt204_cw3.java.WeightedEdge) edge).weight;
             }
         }
 
-        throw new Exception("cpt204_cw3.Edge does not exit");
+        throw new Exception("cpt204_cw3.java.Edge does not exit");
     }
 
     /**
@@ -97,9 +97,9 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
     public void printWeightedEdges() {
         for (int i = 0; i < getSize(); i++) {
             System.out.print(getVertex(i) + " (" + i + "): ");
-            for (cpt204_cw3.Edge edge : neighbors.get(i)) {
+            for (cpt204_cw3.java.Edge edge : neighbors.get(i)) {
                 System.out.print("(" + edge.u +
-                        ", " + edge.v + ", " + ((cpt204_cw3.WeightedEdge) edge).weight + ") ");
+                        ", " + edge.v + ", " + ((cpt204_cw3.java.WeightedEdge) edge).weight + ") ");
             }
             System.out.println();
         }
@@ -109,7 +109,7 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
      * Add an edge (u, v, weight) to the graph.
      */
     public boolean addEdge(int u, int v, double weight) {
-        return addEdge(new cpt204_cw3.WeightedEdge(u, v, weight));
+        return addEdge(new cpt204_cw3.java.WeightedEdge(u, v, weight));
     }
 
     /**
@@ -153,9 +153,9 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
             totalWeight += cost[u]; // Add cost[u] to the tree
 
             // Adjust cost[v] for v that is adjacent to u and v in V - T
-            for (cpt204_cw3.Edge e : neighbors.get(u)) {
-                if (!T.contains(e.v) && cost[e.v] > ((cpt204_cw3.WeightedEdge) e).weight) {
-                    cost[e.v] = ((cpt204_cw3.WeightedEdge) e).weight;
+            for (cpt204_cw3.java.Edge e : neighbors.get(u)) {
+                if (!T.contains(e.v) && cost[e.v] > ((cpt204_cw3.java.WeightedEdge) e).weight) {
+                    cost[e.v] = ((cpt204_cw3.java.WeightedEdge) e).weight;
                     parent[e.v] = u;
                 }
             }
@@ -165,7 +165,7 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
     }
 
     /**
-     * MST is an inner class in cpt204_cw3.WeightedGraph
+     * MST is an inner class in cpt204_cw3.java.WeightedGraph
      */
     public class MST extends SearchTree {
         private double totalWeight; // Total weight of all edges in the tree
@@ -215,10 +215,10 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
             else T.add(u); // Add a new vertex to T
 
             // Adjust cost[v] for v that is adjacent to u and v in V - T
-            for (cpt204_cw3.Edge e : neighbors.get(u)) {
+            for (cpt204_cw3.java.Edge e : neighbors.get(u)) {
                 if (!T.contains(e.v)
-                        && cost[e.v] > cost[u] + ((cpt204_cw3.WeightedEdge) e).weight) {
-                    cost[e.v] = cost[u] + ((cpt204_cw3.WeightedEdge) e).weight;
+                        && cost[e.v] > cost[u] + ((cpt204_cw3.java.WeightedEdge) e).weight) {
+                    cost[e.v] = cost[u] + ((cpt204_cw3.java.WeightedEdge) e).weight;
                     parent[e.v] = u;
                 }
             }
@@ -229,7 +229,7 @@ public class cpt204_cw3.WeightedGraph<V> extends cpt204_cw3.UnWeightedGraph<V> {
     }
 
     /**
-     * ShortestPathTree is an inner class in cpt204_cw3.WeightedGraph
+     * ShortestPathTree is an inner class in cpt204_cw3.java.WeightedGraph
      */
     public class ShortestPathTree extends SearchTree {
         private double[] cost; // cost[v] is the cost from v to source

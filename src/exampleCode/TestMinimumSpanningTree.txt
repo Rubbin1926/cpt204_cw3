@@ -25,9 +25,9 @@ public class TestMinimumSpanningTree {
                 {11, 8, 810}, {11, 9, 1187}, {11, 10, 239}
         };
 
-        cpt204_cw3.WeightedGraph<String> graph1 =
-                new cpt204_cw3.WeightedGraph<>(vertices, edges);
-        cpt204_cw3.WeightedGraph<String>.MST tree1 = graph1.getMinimumSpanningTree();
+        cpt204_cw3.java.WeightedGraph<String> graph1 =
+                new cpt204_cw3.java.WeightedGraph<>(vertices, edges);
+        cpt204_cw3.java.WeightedGraph<String>.MST tree1 = graph1.getMinimumSpanningTree();
         System.out.println("Total weight is " + tree1.getTotalWeight());
         tree1.printTree();
 
@@ -39,8 +39,8 @@ public class TestMinimumSpanningTree {
                 {4, 2, 5}, {4, 3, 6}
         };
 
-        cpt204_cw3.WeightedGraph<Integer> graph2 = new cpt204_cw3.WeightedGraph<>(edges, 5);
-        cpt204_cw3.WeightedGraph<Integer>.MST tree2 =
+        cpt204_cw3.java.WeightedGraph<Integer> graph2 = new cpt204_cw3.java.WeightedGraph<>(edges, 5);
+        cpt204_cw3.java.WeightedGraph<Integer>.MST tree2 =
                 graph2.getMinimumSpanningTree(1);
         System.out.println("\nTotal weight is " + tree2.getTotalWeight());
         tree2.printTree();

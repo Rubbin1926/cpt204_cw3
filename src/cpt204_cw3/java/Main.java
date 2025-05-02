@@ -1,4 +1,4 @@
-package cpt204_cw3;
+package cpt204_cw3.java;
 
 import java.util.ArrayList;
 

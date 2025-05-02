@@ -2,21 +2,21 @@ package org.example;
 
 import java.util.*;
 
-public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
+public class cpt204_cw3.java.UnWeightedGraph<V> implements cpt204_cw3.java.Graph<V> {
     protected List<V> vertices = new ArrayList<>(); // Store vertices
-    protected List<List<cpt204_cw3.Edge>> neighbors
+    protected List<List<cpt204_cw3.java.Edge>> neighbors
             = new ArrayList<>(); // Adjacency lists
 
     /**
      * Construct an empty graph
      */
-    public cpt204_cw3.UnWeightedGraph() {
+    public cpt204_cw3.java.UnWeightedGraph() {
     }
 
     /**
      * Construct a graph from vertices and edges stored in arrays
      */
-    public cpt204_cw3.UnWeightedGraph(V[] vertices, int[][] edges) {
+    public cpt204_cw3.java.UnWeightedGraph(V[] vertices, int[][] edges) {
         for (int i = 0; i < vertices.length; i++)
             addVertex(vertices[i]);
 
@@ -26,7 +26,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
     /**
      * Construct a graph from vertices and edges stored in List
      */
-    public cpt204_cw3.UnWeightedGraph(List<V> vertices, List<cpt204_cw3.Edge> edges) {
+    public cpt204_cw3.java.UnWeightedGraph(List<V> vertices, List<cpt204_cw3.java.Edge> edges) {
         for (int i = 0; i < vertices.size(); i++)
             addVertex(vertices.get(i));
 
@@ -36,7 +36,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
     /**
      * Construct a graph for integer vertices 0, 1, 2 and edge list
      */
-    public cpt204_cw3.UnWeightedGraph(List<cpt204_cw3.Edge> edges, int numberOfVertices) {
+    public cpt204_cw3.java.UnWeightedGraph(List<cpt204_cw3.java.Edge> edges, int numberOfVertices) {
         for (int i = 0; i < numberOfVertices; i++)
             addVertex((V) (new Integer(i))); // vertices is {0, 1, ...}
 
@@ -46,7 +46,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
     /**
      * Construct a graph from integer vertices 0, 1, and edge array
      */
-    public cpt204_cw3.UnWeightedGraph(int[][] edges, int numberOfVertices) {
+    public cpt204_cw3.java.UnWeightedGraph(int[][] edges, int numberOfVertices) {
         for (int i = 0; i < numberOfVertices; i++)
             addVertex((V) (new Integer(i))); // vertices is {0, 1, ...}
 
@@ -67,8 +67,8 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
      * Create adjacency lists for each vertex
      */
     private void createAdjacencyLists(
-            List<cpt204_cw3.Edge> edges, int numberOfVertices) {
-        for (cpt204_cw3.Edge edge : edges) {
+            List<cpt204_cw3.java.Edge> edges, int numberOfVertices) {
+        for (cpt204_cw3.java.Edge edge : edges) {
             addEdge(edge.u, edge.v);
         }
     }
@@ -101,7 +101,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
     /** Return the neighbors of the specified vertex */
     public List<Integer> getNeighbors(int index) {
         List<Integer> result = new ArrayList<>();
-        for (cpt204_cw3.Edge e : neighbors.get(index))
+        for (cpt204_cw3.java.Edge e : neighbors.get(index))
             result.add(e.v);
 
         return result;
@@ -118,7 +118,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
     public void printEdges() {
         for (int u = 0; u < neighbors.size(); u++) {
             System.out.print(getVertex(u) + " (" + u + "): ");
-            for (cpt204_cw3.Edge e : neighbors.get(u)) {
+            for (cpt204_cw3.java.Edge e : neighbors.get(u)) {
                 System.out.print("(" + getVertex(e.u) + ", " +
                         getVertex(e.v) + ") ");
             }
@@ -138,7 +138,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
     public boolean addVertex(V vertex) {
         if (!vertices.contains(vertex)) {
             vertices.add(vertex);
-            neighbors.add(new ArrayList<cpt204_cw3.Edge>());
+            neighbors.add(new ArrayList<cpt204_cw3.java.Edge>());
             return true;
         } else {
             return false;
@@ -147,7 +147,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
 
     @Override
     /** Add an edge to the graph */
-    public boolean addEdge(cpt204_cw3.Edge e) {
+    public boolean addEdge(cpt204_cw3.java.Edge e) {
         if (e.u < 0 || e.u > getSize() - 1)
             throw new IllegalArgumentException("No such index: " + e.u);
 
@@ -165,7 +165,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
     @Override
     /** Add an edge to the graph */
     public boolean addEdge(int u, int v) {
-        return addEdge(new cpt204_cw3.Edge(u, v));
+        return addEdge(new cpt204_cw3.java.Edge(u, v));
     }
 
     @Override
@@ -196,7 +196,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
         searchOrder.add(v);
         isVisited[v] = true; // Vertex v visited
 
-        for (cpt204_cw3.Edge e : neighbors.get(v)) { // Note that e.u is v
+        for (cpt204_cw3.java.Edge e : neighbors.get(v)) { // Note that e.u is v
             if (!isVisited[e.v]) { // e.v is w in Listing 28.8
                 parent[e.v] = v; // The parent of w is v
                 dfs(e.v, parent, searchOrder, isVisited); // Recursive search
@@ -222,7 +222,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
         while (!queue.isEmpty()) {
             int u = queue.poll(); // Dequeue to u
             searchOrder.add(u); // u searched
-            for (cpt204_cw3.Edge e : neighbors.get(u)) { // Note that e.u is u
+            for (cpt204_cw3.java.Edge e : neighbors.get(u)) { // Note that e.u is u
                 if (!isVisited[e.v]) { // e.v is w in Listing 28.11
                     queue.offer(e.v); // Enqueue w
                     parent[e.v] = u; // The parent of w is u
@@ -234,7 +234,7 @@ public class cpt204_cw3.UnWeightedGraph<V> implements cpt204_cw3.Graph<V> {
         return new SearchTree(v, parent, searchOrder);
     }
 
-    /** Tree inner class inside the cpt204_cw3.UnWeightedGraph class */
+    /** Tree inner class inside the cpt204_cw3.java.UnWeightedGraph class */
     /**
      * To be discussed in Section 28.6
      */
