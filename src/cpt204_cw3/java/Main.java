@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         //Test the weightedGraph class
-        City city0 = new City("Seattle");
-        City city1 = new City("San Francisco");
-        City city2 = new City("Los Angeles");
+        City city0 = new City("Seattle", "Mount Rainier");
+        City city1 = new City("San Francisco", "Golden Gate Bridge");
+        City city2 = new City("Los Angeles", "Hollywood");
 
         ArrayList<City> cities = new ArrayList<>();
         cities.add(city0);
