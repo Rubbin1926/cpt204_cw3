@@ -1,0 +1,15 @@
+package org.example;
+
+public class cpt204_cw3.Edge {
+    public int u;
+    public int v;
+
+    public cpt204_cw3.Edge(int u, int v) {
+        this.u = u;
+        this.v = v;
+    }
+
+    public boolean equals(Object o) {
+        return u == ((cpt204_cw3.Edge) o).u && v == ((cpt204_cw3.Edge) o).v;
+    }
+}

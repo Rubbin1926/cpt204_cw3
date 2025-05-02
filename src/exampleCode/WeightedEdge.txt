@@ -1,0 +1,26 @@
+package org.example;
+
+public class cpt204_cw3.WeightedEdge extends cpt204_cw3.Edge implements Comparable<cpt204_cw3.WeightedEdge> {
+    public double weight; // The weight on edge (u, v)
+
+    /**
+     * Create a weighted edge on (u, v)
+     */
+    public cpt204_cw3.WeightedEdge(int u, int v, double weight) {
+        super(u, v);
+        this.weight = weight;
+    }
+
+    /**
+     * Compare two edges on weights
+     */
+    public int compareTo(cpt204_cw3.WeightedEdge edge) {
+        if (weight > edge.weight) {
+            return 1;
+        } else if (weight == edge.weight) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+}
