@@ -1,34 +1,43 @@
 package cpt204_cw3.java;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        //Test the weightedGraph class
-        City city0 = new City("Seattle", "Mount Rainier");
-        City city1 = new City("San Francisco", "Golden Gate Bridge");
-        City city2 = new City("Los Angeles", "Hollywood");
+        // Map to store city names to City objects
+        Map<String, City> cityMap = new HashMap<>();
+        // Temporarily store road information
+        List<CSVGraphBuilder.Road> tempRoads = new ArrayList<>();
 
-        ArrayList<City> cities = new ArrayList<>();
-        cities.add(city0);
-        cities.add(city1);
-        cities.add(city2);
+        // Read attractions.csv and populate cityMap
+        CSVGraphBuilder.readAttractions("src/cpt204_cw3/resources/attractions.csv", cityMap);
 
-        WeightedEdge edge1 = new WeightedEdge(0, 1, 1.5);
-        WeightedEdge edge2 = new WeightedEdge(1, 2, 2.5);
-        ArrayList<WeightedEdge> edges = new ArrayList<>();
-        edges.add(edge1);
-        edges.add(edge2);
+        // Read roads.csv and populate cityMap and tempRoads
+        CSVGraphBuilder.readRoads("src/cpt204_cw3/resources/roads.csv", cityMap, tempRoads);
 
-        WeightedGraph<City> graph = new WeightedGraph<>(cities, edges);
-
-        System.out.println(graph.getVertex(0).getCityName());
-        System.out.println(graph.addWeightedEdges(edges));
-        try {
-            graph.printWeightedEdges();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        // Create a list of vertices (all City objects)
+        List<City> vertices = new ArrayList<>(cityMap.values());
+        // Create a mapping from city names to their indices
+        Map<String, Integer> cityNameToIndex = new HashMap<>();
+        for (int i = 0; i < vertices.size(); i++) {
+            cityNameToIndex.put(vertices.get(i).getCityName(), i);
         }
 
+        // Create a list of edges
+        List<WeightedEdge> edges = new ArrayList<>();
+        for (CSVGraphBuilder.Road road : tempRoads) {
+            int u = cityNameToIndex.get(road.cityA);
+            int v = cityNameToIndex.get(road.cityB);
+            edges.add(new WeightedEdge(u, v, road.distance));
+        }
+
+        // Construct the weighted undirected graph
+        WeightedGraph<City> graph = new WeightedGraph<>(vertices, edges);
+
+        // Example: print the edge information of the graph
+        graph.printGraphDetails();
     }
 }

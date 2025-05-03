@@ -74,6 +74,42 @@ public class WeightedGraph<V> extends UnWeightedGraph<V> {
     }
 
     /**
+     * Print all details of the graph, including city names and distances.
+     */
+    public void printGraphDetails() {
+        // Print all vertices and their IDs
+        System.out.println("City ID Mappings:");
+        for (int i = 0; i < getSize(); i++) {
+            System.out.println("  " + getVertex(i) + " (ID: " + i + ")");
+        }
+
+        // Print all edges with weights (No duplicates)
+        System.out.println("\nEdge List (Undirected):");
+        Set<String> printedEdges = new HashSet<>();
+
+        for (int u = 0; u < getSize(); u++) {
+            for (Edge edge : neighbors.get(u)) {
+                int v = edge.getV();
+
+                // Use unique identifier to avoid printing duplicate undirected edges
+                String edgeKey = u < v ? u + "-" + v : v + "-" + u;
+
+                if (!printedEdges.contains(edgeKey)) {
+                    printedEdges.add(edgeKey);
+
+                    // Get the actual city objects
+                    V cityU = getVertex(u);
+                    V cityV = getVertex(v);
+                    double weight = ((WeightedEdge) edge).getWeight();
+
+                    System.out.printf("  %s (ID %d) <-> %s (ID %d) | Distance: %.0f%n",
+                            cityU, u, cityV, v, weight);
+                }
+            }
+        }
+    }
+
+    /**
      * Add an edge (u, v, weight) to the graph.
      */
     public boolean addWeightedEdge(int u, int v, double weight) {

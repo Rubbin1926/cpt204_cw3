@@ -24,4 +24,9 @@ public class City {
     public String getInterest() {
         return Interest;
     }
+
+    @Override
+    public String toString() {
+        return cityName; // return cityName
+    }
 }
