@@ -1,5 +1,4 @@
-package cpt204_cw3.java;
-import cpt204_cw3.java.City;
+package cpt204_cw3.taskAB;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

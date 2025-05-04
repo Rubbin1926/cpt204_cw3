@@ -1,7 +1,5 @@
-package cpt204_cw3.java;
+package cpt204_cw3.taskAB;
 
-import cpt204_cw3.java.WeightedEdge;
-import cpt204_cw3.java.WeightedGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,4 @@
-package cpt204_cw3.java;
+package cpt204_cw3.taskAB;
 
 public class Edge {
     private int u, v;

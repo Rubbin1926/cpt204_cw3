@@ -21,8 +21,8 @@ public class TestBFS {
       {11, 8}, {11, 9}, {11, 10}
     };
 
-    cpt204_cw3.java.Graph<String> graph = new cpt204_cw3.java.UnWeightedGraph<>(vertices, edges);
-    cpt204_cw3.java.UnWeightedGraph<String>.SearchTree bfs =
+    cpt204_cw3.taskAB.Graph<String> graph = new cpt204_cw3.taskAB.UnWeightedGraph<>(vertices, edges);
+    cpt204_cw3.taskAB.UnWeightedGraph<String>.SearchTree bfs =
       graph.bfs(graph.getIndex("Chicago")); 
 
     java.util.List<Integer> searchOrders = bfs.getSearchOrder();

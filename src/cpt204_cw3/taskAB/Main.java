@@ -1,4 +1,4 @@
-package cpt204_cw3.java;
+package cpt204_cw3.taskAB;
 
 import java.io.IOException;
 import java.util.*;

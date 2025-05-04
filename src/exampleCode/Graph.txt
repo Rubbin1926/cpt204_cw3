@@ -1,6 +1,6 @@
 package org.example;
 
-public interface cpt204_cw3.java.Graph<V> {
+public interface cpt204_cw3.taskAB.Graph<V> {
     /**
      * Return the number of vertices in the graph
      */
@@ -54,7 +54,7 @@ public interface cpt204_cw3.java.Graph<V> {
     /**
      * Add an edge to the graph
      */
-    public boolean addEdge(cpt204_cw3.java.Edge e);
+    public boolean addEdge(cpt204_cw3.taskAB.Edge e);
 
     /**
      * Remove a vertex v from the graph, return true if successful
@@ -69,10 +69,10 @@ public interface cpt204_cw3.java.Graph<V> {
     /**
      * Obtain a depth-first search tree
      */
-    public cpt204_cw3.java.UnWeightedGraph<V>.SearchTree dfs(int v);
+    public cpt204_cw3.taskAB.UnWeightedGraph<V>.SearchTree dfs(int v);
 
     /**
      * Obtain a breadth-first search tree
      */
-    public cpt204_cw3.java.UnWeightedGraph<V>.SearchTree bfs(int v);
+    public cpt204_cw3.taskAB.UnWeightedGraph<V>.SearchTree bfs(int v);
 }

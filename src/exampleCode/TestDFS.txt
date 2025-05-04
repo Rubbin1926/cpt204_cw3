@@ -21,8 +21,8 @@ public class TestDFS {
       {11, 8}, {11, 9}, {11, 10}
     };
 
-    cpt204_cw3.java.Graph<String> graph = new cpt204_cw3.java.UnWeightedGraph<>(vertices, edges);
-    cpt204_cw3.java.UnWeightedGraph<String>.SearchTree dfs =
+    cpt204_cw3.taskAB.Graph<String> graph = new cpt204_cw3.taskAB.UnWeightedGraph<>(vertices, edges);
+    cpt204_cw3.taskAB.UnWeightedGraph<String>.SearchTree dfs =
       graph.dfs(graph.getIndex("Chicago")); 
 
     java.util.List<Integer> searchOrders = dfs.getSearchOrder();
