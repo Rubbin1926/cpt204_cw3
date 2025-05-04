@@ -9,20 +9,20 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            // 初始化图
+            // Initialize the graph
             graph = CSVGraphBuilder.buildGraphFromCSV(
                     "src/cpt204_cw3/resources/attractions.csv",
                     "src/cpt204_cw3/resources/roads.csv"
             );
             planner = new RoadTripPlanner(graph);
 
-            // 获取用户输入
+            // Get user input
             Scanner scanner = new Scanner(System.in);
 
             System.out.print("Enter starting city (e.g., New York NY): ");
             String start = scanner.nextLine().replaceAll("_", "").trim();
 
-            System.out.print("Enter destination city (e.g., Miami FL): ");
+            System.out.print("Enter destination city (e.g., Chicago IL): ");
             String end = scanner.nextLine().replaceAll("_", "").trim();
 
             System.out.print("Enter attractions (comma-separated, e.g., Hollywood Sign) ");
@@ -40,10 +40,10 @@ public class Main {
                 }
             }
 
-            // 计算路线
+            // Calculate the route
             List<City> route = planner.route(start, end, attractions);
 
-            // 输出结果
+            // Output the result
             System.out.println("\nResult: ");
             System.out.println("Start: " + start);
             System.out.println("Destination: " + end);
