@@ -6,25 +6,41 @@ public class QuickSort implements SortAlgorithm {
         quickSort(array, 0, array.length - 1);
     }
 
-    private void quickSort(String[] array, int low, int high) {
-        if (low < high) {
-            int pi = partition(array, low, high);
-            quickSort(array, low, pi - 1);
-            quickSort(array, pi + 1, high);
+    private void quickSort(String[] array, int first, int last) {
+        if (last > first) {
+            int pivotIndex = partition(array, first, last);
+            quickSort(array, first, pivotIndex - 1);
+            quickSort(array, pivotIndex + 1, last);
         }
     }
 
-    private int partition(String[] array, int low, int high) {
-        String pivot = array[high];
-        int i = low - 1;
-        for (int j = low; j < high; j++) {
-            if (array[j].compareTo(pivot) <= 0) {
-                i++;
-                swap(array, i, j);
+    private int partition(String[] array, int first, int last) {
+        String pivot = array[first];
+        int low = first + 1;
+        int high = last;
+
+        while (high > low) {
+            while (low <= high && array[low].compareTo(pivot) <= 0)
+                low++;
+
+            while (low <= high && array[high].compareTo(pivot) > 0)
+                high--;
+
+            if (high > low) {
+                swap(array, high, low);
             }
         }
-        swap(array, i + 1, high);
-        return i + 1;
+
+        while (high > first && array[high].compareTo(pivot) >= 0)
+            high--;
+
+        if (pivot.compareTo(array[high]) > 0) {
+            array[first] = array[high];
+            array[high] = pivot;
+            return high;
+        } else {
+            return first;
+        }
     }
 
     private void swap(String[] array, int i, int j) {
