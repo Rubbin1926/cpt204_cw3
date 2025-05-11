@@ -2,99 +2,52 @@ package cpt204_cw3.taskAB;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     private static WeightedGraph<City> graph;
     private static RoadTripPlanner planner;
+    private static SpellChecker citySpellChecker;
 
     public static void main(String[] args) {
         try {
-            // Initialize the graph
-            graph = CSVGraphBuilder.buildGraphFromCSV(
-                    "src/cpt204_cw3/resources/attractions.csv",
-                    "src/cpt204_cw3/resources/roads.csv"
-            );
-            planner = new RoadTripPlanner(graph);
+            initializeGraph();
+            initializeSpellChecker();
 
-            // Get user input
             Scanner scanner = new Scanner(System.in);
+            InputValidator validator = new InputValidator(
+                    citySpellChecker,
+                    planner,
+                    scanner
+            );
 
-            // 1. Process starting city with immediate validation
-            System.out.print("Enter starting city (e.g., New York NY): ");
-            String start = scanner.nextLine().replaceAll("_", "").trim();
-            validateCity(start, true);
+            String start = validator.getValidCity("starting", "New York NY");
+            String end = validator.getValidCity("destination", "Chicago IL");
+            List<String> attractions = validator.getValidAttractions();
 
-            // 2. Process destination city with immediate validation
-            System.out.print("Enter destination city (e.g., Chicago IL): ");
-            String end = scanner.nextLine().replaceAll("_", "").trim();
-            validateCity(end, false);
-
-            // 3. Process attractions with immediate validation
-            System.out.print("Enter attractions (comma-separated, e.g., Hollywood Sign): ");
-            String attractionsInput = scanner.nextLine()
-                    .replaceAll("_", "")
-                    .trim();
-            List<String> attractions = processAttractions(attractionsInput);
-
-            // Calculate the route
             List<City> route = planner.route(start, end, attractions);
-
-            // Output the result
             printResult(start, end, attractions, route);
 
         } catch (IOException e) {
             System.err.println("File error: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.err.println("Invalid number format: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.err.println("Input error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
         }
     }
 
-    private static List<String> processAttractions(String input) {
-        List<String> attractions = new ArrayList<>();
-        Set<String> uniqueAttractions = new HashSet<>();
-        List<String> duplicates = new ArrayList<>();
-
-        if (!input.isEmpty()) {
-            for (String item : input.split("\\s*,\\s*")) {
-                String trimmedItem = item.trim();
-                if (!trimmedItem.isEmpty()) {
-                    validateAttraction(trimmedItem);
-
-                    // detect duplicates
-                    if (uniqueAttractions.contains(trimmedItem)) {
-                        duplicates.add(trimmedItem);
-                    } else {
-                        uniqueAttractions.add(trimmedItem);
-                        attractions.add(trimmedItem);
-                    }
-                }
-            }
-        }
-
-        // return the attractions list without duplicates
-        // Warning: Duplicate attractions detected and removed
-        if (!duplicates.isEmpty()) {
-            System.err.println("Warning: Duplicate attractions detected and removed: " + duplicates);
-        }
-
-        return attractions;
+    private static void initializeGraph() throws IOException {
+        graph = CSVGraphBuilder.buildGraphFromCSV(
+                "src/cpt204_cw3/resources/attractions.csv",
+                "src/cpt204_cw3/resources/roads.csv"
+        );
+        planner = new RoadTripPlanner(graph);
     }
 
-    private static void validateCity(String cityName, boolean isStart) {
-        int index = planner.findCityIndex(cityName);
-        if (index == -1) {
-            String errorType = isStart ? "Starting" : "Ending";
-            throw new IllegalArgumentException(errorType + " city not found: " + cityName);
-        }
-    }
-
-    private static void validateAttraction(String attraction) {
-        int index = planner.findAttractionIndex(attraction);
-        if (index == -1) {
-            throw new IllegalArgumentException("Attraction not found: " + attraction);
-        }
+    private static void initializeSpellChecker() {
+        List<String> cityNames = graph.getVertices().stream()
+                .map(City::getCityName)
+                .collect(Collectors.toList());
+        citySpellChecker = new SpellChecker(cityNames);
     }
 
     private static void printResult(String start, String end, List<String> attractions, List<City> route) {
