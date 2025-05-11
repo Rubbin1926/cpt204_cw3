@@ -73,7 +73,7 @@ public class RoadTripPlanner {
         return constructFullPath(startIndex, endIndex, bestPermutation, predecessors);
     }
 
-    private int findCityIndex(String cityName) {
+    public int findCityIndex(String cityName) {
         for (int i = 0; i < graph.getSize(); i++) {
             City city = graph.getVertex(i);
             if (city.getCityName().equals(cityName)) {
@@ -83,7 +83,7 @@ public class RoadTripPlanner {
         return -1;
     }
 
-    private int findAttractionIndex(String attraction) {
+    public int findAttractionIndex(String attraction) {
         for (int i = 0; i < graph.getSize(); i++) {
             City city = graph.getVertex(i);
             if (attraction.equals(city.getInterest())) {
