@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             initializeGraph();
+            initializePlanner();
             initializeSpellChecker();
 
             Scanner scanner = new Scanner(System.in);
@@ -40,6 +41,9 @@ public class Main {
                 "src/cpt204_cw3/resources/attractions.csv",
                 "src/cpt204_cw3/resources/roads.csv"
         );
+    }
+
+    private static void initializePlanner() throws IOException {
         planner = new RoadTripPlanner(graph);
     }
 
