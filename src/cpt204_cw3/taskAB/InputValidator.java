@@ -93,7 +93,7 @@ public class InputValidator {
         if (suggestions.isEmpty()) {
             WarningPrinter.printWarning("No suggestions available.");
         } else {
-            suggestions.forEach(s -> System.out.println("  • " + s));
+            suggestions.forEach(s -> System.out.println("  - " + s));
         }
         WarningPrinter.printWarning("Please try again.\n");
     }
