@@ -14,18 +14,18 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         Button terminalBtn = new Button("Terminal Mode");
-        terminalBtn.setPrefWidth(150);
+        terminalBtn.setPrefWidth(250);
         terminalBtn.setOnAction(e -> handleTerminalMode(primaryStage));
 
         Button guiBtn = new Button("Graphical Mode");
-        guiBtn.setPrefWidth(150);
+        guiBtn.setPrefWidth(250);
         guiBtn.setOnAction(e -> handleGuiMode(primaryStage));
 
         VBox root = new VBox(20, terminalBtn, guiBtn);
         root.setPadding(new Insets(30));
 
         primaryStage.setTitle("Select Operation Mode");
-        primaryStage.setScene(new Scene(root, 300, 200));
+        primaryStage.setScene(new Scene(root, 300, 150));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
