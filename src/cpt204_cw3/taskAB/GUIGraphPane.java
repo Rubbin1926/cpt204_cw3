@@ -10,15 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GraphPane extends Pane {
+public class GUIGraphPane extends Pane {
 
     private final WeightedGraph<City> graph;
     private final Map<City, Point2D> positions = new HashMap<>();
     private List<City> highlightedRoute;
 
-    public GraphPane(WeightedGraph<City> graph) {
+    public GUIGraphPane(WeightedGraph<City> graph) {
         this.graph = graph;
-        this.setPrefSize(1200, 800);
+        this.setPrefSize(800, 800);
     }
 
     public void layoutGraph() {
