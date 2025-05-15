@@ -5,8 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +16,9 @@ public class GUIMode{
     private WeightedGraph<City> graph;
     private RoadTripPlanner planner;
     private SpellChecker citySpellChecker;
-    private GraphPane graphPane;
+    private GUIGraphPane GUIGraphPane;
+    private TextArea resultArea;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     public GUIMode(Stage primaryStage) {
         try {
@@ -26,37 +30,56 @@ public class GUIMode{
             BorderPane root = new BorderPane();
             root.setPadding(new Insets(10));
 
+            // Input components
             TextField startField = new TextField();
             TextField endField = new TextField();
             ListView<String> attractionsList = new ListView<>();
             Button planButton = new Button("Plan Route");
 
-            populateAttractionsList(attractionsList);
+            // Result display components
+            resultArea = new TextArea();
+            resultArea.setEditable(false);
+            resultArea.setPrefHeight(150);
+            ScrollPane resultScroll = new ScrollPane(resultArea);
+            resultScroll.setFitToWidth(true);
 
+            // Configure attractions list
+            populateAttractionsList(attractionsList);
+            Label multiSelectHint = new Label("(Ctrl/Cmd-click to select multiple)");
+            multiSelectHint.setStyle("-fx-text-fill: #666; -fx-font-size: 10;");
+
+            // Layout organization
+            VBox inputPanel = new VBox(10,
+                    createInputRow("Start:", startField),
+                    createInputRow("End:  ", endField),
+                    new VBox(5,
+                            new Label("Attractions:"),
+                            multiSelectHint,
+                            attractionsList
+                    ),
+                    new HBox(10, planButton, resultScroll)
+            );
+            inputPanel.setPadding(new Insets(10));
+
+            // Graph display area
+            GUIGraphPane = new GUIGraphPane(graph);
+            root.setLeft(inputPanel);
+            root.setCenter(GUIGraphPane);
+
+            // Event handling
             planButton.setOnAction(e -> handleRoutePlanning(
                     sanitizeInput(startField.getText()),
                     sanitizeInput(endField.getText()),
                     attractionsList.getSelectionModel().getSelectedItems()
             ));
 
-            HBox inputPanel = new HBox(10,
-                    new Label("Start:"), startField,
-                    new Label("End:"), endField,
-                    new Label("Attractions:"), attractionsList,
-                    planButton
-            );
-            inputPanel.setPadding(new Insets(10));
-
-            graphPane = new GraphPane(graph);
-            root.setTop(inputPanel);
-            root.setCenter(graphPane);
-
-            Scene scene = new Scene(root, 1200, 800);
+            // Stage configuration
+            Scene scene = new Scene(root, 1600, 900);
             primaryStage.setTitle("USA Road Trip Planner");
             primaryStage.setScene(scene);
             primaryStage.show();
 
-            graphPane.layoutGraph();
+            GUIGraphPane.layoutGraph();
 
         } catch (IOException e) {
             GUIValidationUtil.showAlert("File Error", e.getMessage(), Alert.AlertType.ERROR);
@@ -65,19 +88,70 @@ public class GUIMode{
         }
     }
 
+    private HBox createInputRow(String label, Control field) {
+        HBox row = new HBox(5, new Label(label), field);
+        field.setPrefWidth(200);
+        return row;
+    }
+
     private void handleRoutePlanning(String start, String end, List<String> attractions) {
         try {
+            resultArea.clear();  // Clear previous results
+
             String validatedStart = validateCity(start, "Starting");
             String validatedEnd = validateCity(end, "Destination");
 
             if (validatedStart == null || validatedEnd == null) return;
 
             List<City> route = planner.route(validatedStart, validatedEnd, attractions);
-            graphPane.highlightRoute(route);
+
+            // Update graph visualization
+            GUIGraphPane.highlightRoute(route);
+
+            // Update text results
+            if (route.isEmpty()) {
+                resultArea.setText("No valid route found!");
+            } else {
+                resultArea.setText(formatResult(validatedStart, validatedEnd, attractions, route));
+            }
 
         } catch (Exception ex) {
             GUIValidationUtil.showAlert("Planning Error", ex.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    // Formats results similar to terminal output
+    private String formatResult(String start, String end, List<String> attractions, List<City> route) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Result:\n");
+        sb.append("Start: ").append(start).append("\n");
+        sb.append("Destination: ").append(end).append("\n");
+        sb.append("Attractions: ").append(attractions).append("\n");
+
+        if (route.isEmpty()) {
+            sb.append("No valid route found!");
+        } else {
+            sb.append("Optimal Route: [");
+            route.forEach(city -> sb.append(city.getCityName()).append(", "));
+            sb.setLength(sb.length()-2);  // Remove trailing comma
+            sb.append("]\n");
+            sb.append(String.format("Total Distance: %.1f miles", calculateTotalDistance(route)));
+        }
+        return sb.toString();
+    }
+
+    private double calculateTotalDistance(List<City> route) {
+        double total = 0;
+        for (int i = 1; i < route.size(); i++) {
+            try {
+                int u = graph.getIndex(route.get(i - 1));
+                int v = graph.getIndex(route.get(i));
+                total += graph.getWeight(u, v);
+            } catch (Exception e) {
+                return -1;
+            }
+        }
+        return total;
     }
 
     private String validateCity(String input, String fieldName) {
@@ -97,12 +171,14 @@ public class GUIMode{
     }
 
     private void populateAttractionsList(ListView<String> listView) {
-        listView.getItems().addAll(graph.getVertices().stream()
+        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        listView.setPrefHeight(200);
+
+        listView.getItems().setAll(graph.getVertices().stream()
                 .filter(c -> !c.getInterest().isEmpty())
                 .map(City::getInterest)
+                .distinct()
                 .collect(Collectors.toList()));
-
-        listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     private String sanitizeInput(String input) {
@@ -128,6 +204,6 @@ public class GUIMode{
     }
 
     public static void main(String[] args) {
-        System.out.println("Starting GUI mode...");
+        System.out.println("Please run Main.java");
     }
 }
