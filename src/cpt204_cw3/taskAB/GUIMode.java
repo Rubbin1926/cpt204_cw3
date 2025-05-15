@@ -1,6 +1,5 @@
 package cpt204_cw3.taskAB;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -60,9 +59,9 @@ public class GUIMode{
             graphPane.layoutGraph();
 
         } catch (IOException e) {
-            ValidationUtil.showAlert("File Error", e.getMessage(), Alert.AlertType.ERROR);
+            GUIValidationUtil.showAlert("File Error", e.getMessage(), Alert.AlertType.ERROR);
         } catch (Exception e) {
-            ValidationUtil.showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
+            GUIValidationUtil.showAlert("Error", e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -77,7 +76,7 @@ public class GUIMode{
             graphPane.highlightRoute(route);
 
         } catch (Exception ex) {
-            ValidationUtil.showAlert("Planning Error", ex.getMessage(), Alert.AlertType.ERROR);
+            GUIValidationUtil.showAlert("Planning Error", ex.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -87,10 +86,10 @@ public class GUIMode{
         }
 
         List<String> suggestions = citySpellChecker.getSuggestions(input, 3);
-        String corrected = ValidationUtil.showSuggestionDialog(input, suggestions);
+        String corrected = GUIValidationUtil.showSuggestionDialog(input, suggestions);
 
         if (corrected == null) {
-            ValidationUtil.showAlert("Invalid Input",
+            GUIValidationUtil.showAlert("Invalid Input",
                     String.format("Invalid %s city: %s", fieldName.toLowerCase(), input),
                     Alert.AlertType.WARNING);
         }
