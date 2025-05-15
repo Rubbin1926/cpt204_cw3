@@ -6,7 +6,7 @@ import javafx.scene.control.ChoiceDialog;
 import java.util.List;
 import java.util.Optional;
 
-public class ValidationUtil {
+public class GUIValidationUtil {
 
     // Shows suggestion dialog with city recommendations
     public static String showSuggestionDialog(String invalidInput, List<String> suggestions) {
