@@ -18,7 +18,6 @@ public class GUIMode{
     private SpellChecker citySpellChecker;
     private GUIGraphPane GUIGraphPane;
     private TextArea resultArea;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
     public GUIMode(Stage primaryStage) {
         try {
