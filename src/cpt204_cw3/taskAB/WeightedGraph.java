@@ -155,5 +155,14 @@ public class WeightedGraph<V> extends UnWeightedGraph<V> {
         }
         return result;
     }
+
+    @Override
+    protected Edge createReverseEdge(Edge originalEdge) {
+        if (originalEdge instanceof WeightedEdge) {
+            WeightedEdge we = (WeightedEdge) originalEdge;
+            return new WeightedEdge(we.getV(), we.getU(), we.getWeight());
+        }
+        return new Edge(originalEdge.getV(), originalEdge.getU());
+    }
 }
 

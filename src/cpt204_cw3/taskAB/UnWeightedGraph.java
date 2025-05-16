@@ -2,7 +2,7 @@ package cpt204_cw3.taskAB;
 
 import java.util.*;
 
-public class UnWeightedGraph<V> implements Graph<V> {
+public abstract class UnWeightedGraph<V> implements Graph<V> {
     protected List<V> vertices = new ArrayList<>(); // Store vertices
     protected List<List<Edge>> neighbors = new ArrayList<>(); // Adjacency lists
 
@@ -123,7 +123,7 @@ public class UnWeightedGraph<V> implements Graph<V> {
         }
 
         // Add reversed edge
-        Edge reverseEdge = new Edge(e.getV(), e.getU());
+        Edge reverseEdge = createReverseEdge(e);
         if (!neighbors.get(reverseEdge.getU()).contains(reverseEdge)) {
             neighbors.get(reverseEdge.getU()).add(reverseEdge);
             added = true;
@@ -131,6 +131,8 @@ public class UnWeightedGraph<V> implements Graph<V> {
 
         return added;
     }
+
+    protected abstract Edge createReverseEdge(Edge originalEdge);
 
     @Override
     public boolean addEdge(int u, int v) {
