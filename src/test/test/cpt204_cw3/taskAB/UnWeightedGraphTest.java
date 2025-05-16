@@ -7,12 +7,19 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+class TestGraph extends UnWeightedGraph<String> {
+    @Override
+    protected Edge createReverseEdge(Edge originalEdge) {
+        return new Edge(originalEdge.getV(), originalEdge.getU());
+    }
+}
+
 public class UnWeightedGraphTest {
     private UnWeightedGraph<String> graph;
 
     @BeforeEach
     public void setUp() {
-        graph = new UnWeightedGraph<>();
+        graph = new TestGraph();
     }
 
     // Test vertex operations
