@@ -97,24 +97,4 @@ public class InputValidator {
         }
         WarningPrinter.printWarning("Please try again.\n");
     }
-
-    private List<String> processAttractions(String input) {
-        return Arrays.stream(input.split("\\s*,\\s*"))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .distinct()
-                .collect(Collectors.toList());
-    }
-
-    private boolean validateAttractions(List<String> attractions) {
-        List<String> invalid = attractions.stream()
-                .filter(a -> planner.findAttractionIndex(a) == -1)
-                .collect(Collectors.toList());
-
-        if (!invalid.isEmpty()) {
-            System.out.println("Invalid attractions: " + invalid);
-            return false;
-        }
-        return true;
-    }
 }

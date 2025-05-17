@@ -13,15 +13,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Button terminalBtn = new Button("Terminal Mode");
-        terminalBtn.setPrefWidth(250);
-        terminalBtn.setOnAction(e -> handleTerminalMode(primaryStage));
+        Button cliBtn = new Button("CLI Mode");
+        cliBtn.setPrefWidth(250);
+        cliBtn.setOnAction(e -> handleCliMode(primaryStage));
 
-        Button guiBtn = new Button("Graphical Mode");
+        Button guiBtn = new Button("GUI Mode");
         guiBtn.setPrefWidth(250);
         guiBtn.setOnAction(e -> handleGuiMode(primaryStage));
 
-        VBox root = new VBox(20, terminalBtn, guiBtn);
+        VBox root = new VBox(20, cliBtn, guiBtn);
         root.setPadding(new Insets(30));
 
         primaryStage.setTitle("Select Operation Mode");
@@ -30,7 +30,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void handleTerminalMode(Stage selectorStage) {
+    private void handleCliMode(Stage selectorStage) {
         selectorStage.close();
         Platform.exit();
 
@@ -39,7 +39,7 @@ public class Main extends Application {
                 String javaHome = System.getProperty("java.home");
                 String javaBin = javaHome + "/bin/java";
                 String classpath = System.getProperty("java.class.path");
-                String className = TerminalMode.class.getName();
+                String className = CLIMode.class.getName();
 
                 ProcessBuilder builder = new ProcessBuilder(
                         javaBin, "-cp", classpath, className
